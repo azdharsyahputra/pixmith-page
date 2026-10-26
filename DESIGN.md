@@ -1,46 +1,43 @@
 # Design: Pixmith website
 
-A 16-bit JRPG the visitor is already playing. Night-scene pixel art carries the first viewport; every action lives
-in a JRPG window and is chosen with a cursor menu.
+Premium editorial on art paper, where the pixels are the artwork. The Pixmith P, built tile by tile, carries the first
+viewport; everything else is set like a print catalogue: serif display, tracked capitals, ink rules, framed prints.
 
 ## Tokens
 
 | Token | Value | Use |
 | --- | --- | --- |
-| `--night` | `#120d2b` | Page ground, scene sky top |
-| `--night-2` | `#171036` | Alternate band, with a 32px checkerboard (`#1c1440`) |
-| `--win-top` → `--win-bottom` | `#2d3aa8` → `#121a63` | Window fill (vertical) |
-| `--ink` / `--ink-2` / `--ink-3` | `#f4f2ff` / `#d4d0f2` / `#a9a4d6` | Text, secondary, captions |
-| `--gold` | `#ffd36b` | Window titles, the selected item, focus rings, links |
-| `--coral` | `#ff6a4d` | Live Link wire and packet |
-| `--violet` `--blue` `--pink` `--amber` | `#8c5cff` `#5b95ff` `#f0508a` `#ffb347` | Sprites and scene light (the logo ramp) |
-| `--outline` | `#0a0b26` | Sprite outlines, pixel text shadow |
+| `--paper` / `--paper-2` / `--card` | `#f3eee3` / `#ebe4d5` / `#f8f4ec` | Page, wells, cards and frames |
+| `--ink` / `--ink-2` / `--ink-3` | `#18214d` / `#3c4470` / `#6b6f8a` | Type, rules, secondary text |
+| `--rule` | `#d8cfbd` | Hairlines inside cards |
+| `--coral` | `#f05a42` | The accent: third headline line, step rule, arrows, dots, focus |
+| `--night` | `#1a1533` | The Live Link band |
+| Logo ramp | `#a65cf2` → `#5f88ff` → `#dc52a8` → `#ff9445` | Tiles of the P only |
 
 ## Type
 
-- **Pixelify Sans** (self-hosted, `--font-pixel`): headings, window titles, menus, dialogue, labels.
-- **Bricolage Grotesque** (`--font-body`): reading text (ledes, descriptions, answers).
-- **JetBrains Mono** (`--font-mono`): `kbd` and code only.
-- Headings carry a 3–4px pixel drop shadow in `--outline`, the SNES text convention; nothing else uses hard shadows.
+- **Gloock** (`--font-display`): headlines, card titles, the install questions.
+- **Hanken Grotesk** (`--font-body`): body text; tracked uppercase (0.16–0.24em) for nav, buttons and labels.
+- **JetBrains Mono**: `kbd` only.
 
 ## Components
 
-- **Window (`.win`)**: 18px border from `public/img/frame.svg` (an 18×18 pixel frame, 9-sliced at 6), fill gradient
-  inside the frame, optional gold title. Every surface that holds content is a window.
-- **Cursor menu (`Menu`)**: pixel-font links; the selected one turns gold with the `cursor.svg` arrow stepping beside
-  it. Pointer hover, focus and the arrow keys move the cursor; Enter or click acts.
-- **Typed dialogue (`Typed`)**: types a line in place; the full text is in the DOM from the start; reduced motion
-  shows it at once.
-- **Inventory**: 4-column slot grid (selected slot gets a 3px gold inset) plus one description window.
-- **Scene / Live Link demo**: canvases at native pixel size scaled with `image-rendering: pixelated`.
+- **Tile P (`TileMark`)**: 16 tiles in a `--tile` grid (gap 8%), rounded 22%, lit top / shaded bottom insets and a
+  colored soft shadow; placed in turn on load, loose tiles drift; hover lifts a tile. Settles without motion if the
+  animation is held back.
+- **Step rule**: an 11-step pixel staircase in coral under headlines (a pixel line in place of a swash).
+- **Buttons**: 58px pills; ink-filled with a paper gap ring, or ink outline with a coral dot.
+- **Editorial cards**: three across between 1.5px ink rules, text left and image right, coral arrow badge.
+- **Feature strip**: four items with circled pixel icons between hairlines.
+- **Print**: screenshots in a paper frame with a soft shadow.
+- **Live Link demo**: two dark panes joined by a dashed coral wire; a packet runs it on each stroke.
 
 ## Motion
 
-One language: stepped (`steps(2)`) loops for the cursor and the "next" arrow, a single eased packet along the Live
-Link wire per stroke, parallax of a few whole pixels on the scene. All of it stops under `prefers-reduced-motion`.
+Tiles placing and drifting, the packet, gentle hover lifts and image zoom. Exponential ease-out throughout; all of it
+stops under `prefers-reduced-motion`.
 
 ## Assets
 
-`public/img/frame.svg` and `cursor.svg`: drawn for this site. `logo.png` and the editor screenshots: from the
-Pixmith repository (`assets/`, `docs/design/screens/`). Scene and sprites: drawn in code (`app/components/Scene.tsx`,
-`app/sprites.tsx`). Fonts: Google Fonts, OFL, self-hosted in `app/fonts/`.
+`logo.png` and the editor screenshots from the Pixmith repository; `human-walk.gif` from Pixmith's sample art; pixel
+icons drawn in `app/sprites.tsx`; fonts from Google Fonts (OFL), self-hosted in `app/fonts/`.
