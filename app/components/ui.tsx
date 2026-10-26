@@ -88,29 +88,54 @@ export function Menu({ items, label }: { items: MenuItem[]; label: string }) {
   );
 }
 
-export type Downloads = { os: "mac" | "windows" | "linux" | null; urls: Record<"mac" | "windows" | "linux", string>; version: string | null };
+export type Os = "mac" | "windows" | "linux";
+export type Downloads = { os: Os | null; urls: Record<Os, string>; version: string | null };
+export type Asset = { name: string; url: string; size: number };
+export type Release = { os: Os | null; arch: "arm" | "x86" | null; version: string | null; date: string | null; assets: Asset[] };
 
 const RELEASES = `${REPO}/releases/latest`;
+const API = "https://api.github.com/repos/azdharsyahputra/pixmith/releases/latest";
+
+/** The visitor's desktop system, or null on phones and unknown systems. */
+function detectOs(): Os | null {
+  const nav = navigator as Navigator & { userAgentData?: { platform?: string } };
+  const plat = nav.userAgentData?.platform || navigator.platform || "";
+  if (/android|iphone|ipad/i.test(navigator.userAgent)) return null;
+  return /mac/i.test(plat) ? "mac" : /win/i.test(plat) ? "windows" : /linux|x11/i.test(plat) ? "linux" : null;
+}
+
+type ApiRelease = { tag_name: string; published_at: string; assets: { name: string; size: number; browser_download_url: string }[] };
+let cached: Promise<ApiRelease | null> | null = null;
+const latest = (): Promise<ApiRelease | null> => (cached ??= fetch(API).then((r) => (r.ok ? r.json() : null)).catch(() => null));
+
+/** The newest release with every file, the visitor's system and, where the browser says, its CPU (arm or x86). */
+export function useRelease(): Release {
+  const [r, setR] = useState<Release>({ os: null, arch: null, version: null, date: null, assets: [] });
+  useEffect(() => {
+    const os = detectOs();
+    setR((p) => ({ ...p, os }));
+    const ua = (navigator as Navigator & { userAgentData?: { getHighEntropyValues?: (h: string[]) => Promise<{ architecture?: string }> } }).userAgentData;
+    ua?.getHighEntropyValues?.(["architecture"])
+      .then((v) => setR((p) => ({ ...p, arch: v.architecture === "arm" ? "arm" : v.architecture === "x86" ? "x86" : null })))
+      .catch(() => {});
+    latest().then((rel) => {
+      if (!rel) return;
+      const assets = rel.assets.map((a) => ({ name: a.name, url: a.browser_download_url, size: a.size }));
+      setR((p) => ({ ...p, version: rel.tag_name, date: rel.published_at, assets }));
+    });
+  }, []);
+  return r;
+}
+
+/** The first file whose name matches, or the releases page. */
+export const pick = (assets: Asset[], re: RegExp): Asset | null => assets.find((a) => re.test(a.name)) ?? null;
+export const releasesPage = RELEASES;
 
 /** The visitor's system and the newest release's files for each system (falls back to the releases page). */
 export function useDownloads(): Downloads {
-  const [d, setD] = useState<Downloads>({ os: null, urls: { mac: RELEASES, windows: RELEASES, linux: RELEASES }, version: null });
-  useEffect(() => {
-    const nav = navigator as Navigator & { userAgentData?: { platform?: string } };
-    const plat = nav.userAgentData?.platform || navigator.platform || "";
-    const mobile = /android|iphone|ipad/i.test(navigator.userAgent);
-    const os = mobile ? null : /mac/i.test(plat) ? "mac" : /win/i.test(plat) ? "windows" : /linux|x11/i.test(plat) ? "linux" : null;
-    setD((p) => ({ ...p, os }));
-    fetch("https://api.github.com/repos/azdharsyahputra/pixmith/releases/latest")
-      .then((r) => (r.ok ? r.json() : null))
-      .then((rel: { tag_name: string; assets: { name: string; browser_download_url: string }[] } | null) => {
-        if (!rel) return;
-        const pick = (re: RegExp) => rel.assets.find((a) => re.test(a.name))?.browser_download_url || RELEASES;
-        setD({ os, version: rel.tag_name, urls: { mac: pick(/\.dmg$/i), windows: pick(/setup.*\.exe$/i), linux: pick(/linux.*\.tar\.gz$/i) } });
-      })
-      .catch(() => {});
-  }, []);
-  return d;
+  const r = useRelease();
+  const url = (re: RegExp) => pick(r.assets, re)?.url || RELEASES;
+  return { os: r.os, version: r.version, urls: { mac: url(/\.dmg$/i), windows: url(/setup.*\.exe$/i), linux: url(/linux.*\.tar\.gz$/i) } };
 }
 
 export const OS_NAME = { mac: "macOS", windows: "Windows", linux: "Linux" } as const;
