@@ -4,7 +4,6 @@ import { createContext, useContext, useEffect, useState, type ReactNode } from "
 
 export type Lang = "en" | "id";
 
-const MCP = "https://github.com/azdharsyahputra/pixmith-mcp";
 const ISSUES = "https://github.com/azdharsyahputra/pixmith/issues";
 
 // Every string on the page, in both languages. Values may hold markup.
@@ -37,7 +36,7 @@ const DICT = {
       { t: "Pixel-perfect tools", p: "Pencil, shapes, shading ink, symmetry." },
       { t: "Tilemaps & isometric", p: "Auto-tiling terrain, diamond grid." },
       { t: "Lua, Aseprite-style", p: "Color, Image, Sprite, app.command." },
-      { t: "AI that draws along", p: "MCP server for Claude and friends." },
+      { t: "Palettes & indexed", p: "Ramps, presets, indexed and grayscale." },
     ],
     "live.title": "Recolor the fighter. Watch the fight.",
     "live.lede": "This is Live Link in your browser. Change a color in the editor and the battle on the right carries on with it, the way Pixmith updates your running Godot game.",
@@ -56,7 +55,6 @@ const DICT = {
       { q: "Windows: “Windows protected your PC”", a: <>Click <kbd>More info</kbd>, then <kbd>Run anyway</kbd>. The installer is built from the public source on GitHub; the warning only means it has no paid signature yet.</> },
       { q: "macOS: “cannot verify Pixmith”", a: <>Drag Pixmith to Applications and open it once. Then open <kbd>System Settings → Privacy &amp; Security</kbd> and click <kbd>Open Anyway</kbd>.</> },
       { q: "Linux", a: <>Unpack the archive and run <kbd>./Pixmith</kbd>. Linux support is best effort during the beta.</> },
-      { q: "Let an AI draw with you", a: <>Install the <a href={MCP}>Pixmith MCP server</a>: your assistant edits the open document and checks the result in your running game.</> },
       { q: "Found a bug or have an idea?", a: <>Open an issue on <a href={ISSUES}>GitHub</a>. Every report shapes the beta.</> },
     ],
     "close.title": "Start placing pixels.",
@@ -90,7 +88,7 @@ const DICT = {
       { t: "Alat pixel-perfect", p: "Pensil, bentuk, shading ink, simetri." },
       { t: "Tilemap & isometrik", p: "Terrain auto-tiling, grid diamond." },
       { t: "Lua ala Aseprite", p: "Color, Image, Sprite, app.command." },
-      { t: "AI ikut menggambar", p: "Server MCP untuk Claude dan lainnya." },
+      { t: "Palet & indexed", p: "Ramp, preset, mode indexed dan grayscale." },
     ],
     "live.title": "Ganti warnanya. Lihat pertarungannya.",
     "live.lede": "Ini Live Link di browser kamu. Ganti satu warna di editor dan pertarungan di kanan langsung berlanjut dengan warna barunya, sama seperti Pixmith memperbarui game Godot yang sedang berjalan.",
@@ -109,7 +107,6 @@ const DICT = {
       { q: "Windows: “Windows protected your PC”", a: <>Klik <kbd>More info</kbd>, lalu <kbd>Run anyway</kbd>. Installer-nya dibuat dari source publik di GitHub; peringatan itu hanya karena belum punya tanda tangan berbayar.</> },
       { q: "macOS: “tidak bisa memverifikasi Pixmith”", a: <>Seret Pixmith ke Applications lalu buka sekali. Setelah itu buka <kbd>System Settings → Privacy &amp; Security</kbd> dan klik <kbd>Open Anyway</kbd>.</> },
       { q: "Linux", a: <>Ekstrak arsipnya lalu jalankan <kbd>./Pixmith</kbd>. Dukungan Linux masih best effort selama beta.</> },
-      { q: "Biarkan AI ikut menggambar", a: <>Pasang <a href={MCP}>server MCP Pixmith</a>: asisten kamu mengedit dokumen yang terbuka dan mengecek hasilnya di game yang berjalan.</> },
       { q: "Nemu bug atau punya ide?", a: <>Buka issue di <a href={ISSUES}>GitHub</a>. Setiap laporan ikut membentuk beta ini.</> },
     ],
     "close.title": "Mulai susun pixel kamu.",

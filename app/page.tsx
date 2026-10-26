@@ -191,7 +191,6 @@ export default function Home() {
         <span className="foot-links">
           <a href={REPO}>GitHub</a>
           <a href={`${REPO}/releases`}>Releases</a>
-          <a href="https://github.com/azdharsyahputra/pixmith-mcp">MCP</a>
         </span>
       </footer>
     </>
