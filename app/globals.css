@@ -352,3 +352,53 @@ h1 span:last-child {
   .dl-extra { grid-template-columns: 1fr; }
   .dl-next { padding: 26px 22px; }
 }
+
+/* ---------- Guide ---------- */
+.guide { padding: 90px 0 60px; }
+.guide-head { max-width: 760px; }
+.guide-head .step-rule { color: var(--violet); }
+.guide-body { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 56px; margin-top: 40px; align-items: start; }
+.guide-side { position: sticky; top: 104px; max-height: calc(100svh - 124px); overflow-y: auto; padding-right: 8px; scrollbar-width: thin; }
+.side-grp { margin-bottom: 22px; }
+.side-grp p { margin: 0 0 8px; font-size: 11px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-3); }
+.side-grp a { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 6px 10px; margin-left: -10px; border-radius: 8px; font-size: 14.5px; color: var(--ink-2); text-decoration: none; transition: background .2s, color .2s; }
+.side-grp a:hover { color: var(--ink); background: rgba(255, 255, 255, .04); }
+.side-grp a[aria-current="true"] { color: var(--ink); background: rgba(166, 92, 242, .14); box-shadow: inset 2px 0 0 var(--violet); }
+.side-grp kbd { font-size: 11px; padding: 0 5px; opacity: .8; }
+.doc-grp { padding-bottom: 30px; }
+.doc-grp + .doc-grp { padding-top: 40px; border-top: 1px solid var(--rule); }
+.doc-grp-title { margin: 0 0 8px; font: 400 clamp(34px, 3.6vw, 50px)/1.05 var(--font-display), serif; }
+.doc-grp-intro { margin: 0 0 26px; max-width: 64ch; color: var(--ink-2); }
+.doc { margin-top: 18px; padding: 28px 30px; border-radius: 20px; background: var(--card); box-shadow: inset 0 0 0 1px var(--rule); scroll-margin-top: 104px; }
+.doc-head { display: flex; gap: 18px; align-items: flex-start; }
+.doc-key { flex: none; display: grid; place-items: center; width: 52px; height: 52px; border-radius: 14px; font: 700 20px var(--font-mono), monospace; color: #fff; background: var(--ramp); background-size: 300% 100%; box-shadow: inset 0 -4px 0 rgba(0, 0, 0, .2), inset 0 2px 0 rgba(255, 255, 255, .25), 0 10px 26px -12px rgba(166, 92, 242, .8); }
+.doc:nth-child(3n + 1) .doc-key { background-position: 0 0; }
+.doc:nth-child(3n + 2) .doc-key { background-position: 50% 0; }
+.doc:nth-child(3n) .doc-key { background-position: 100% 0; }
+.doc h3 { margin: 2px 0 4px; font: 400 26px/1.15 var(--font-display), serif; }
+.doc-head p { margin: 0; color: var(--ink-2); font-size: 16px; }
+.doc-steps { margin: 20px 0 0; padding-left: 22px; display: grid; gap: 8px; color: var(--ink-2); font-size: 15.5px; }
+.doc-steps li::marker { color: var(--coral); font-weight: 700; }
+.doc-mods { margin: 20px 0 0; display: grid; gap: 1px; border-radius: 12px; overflow: hidden; background: var(--rule); }
+.doc-mods div { display: grid; grid-template-columns: minmax(150px, auto) 1fr; gap: 16px; align-items: center; padding: 10px 14px; background: var(--card-2); }
+.doc-mods dt { margin: 0; }
+.doc-mods dd { margin: 0; font-size: 14.5px; color: var(--ink-2); }
+.keys { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 2px; }
+.keys i { font-style: normal; color: var(--ink-3); margin: 0 3px; font-size: 12px; }
+.doc-tip { margin: 18px 0 0; padding: 12px 16px; border-radius: 12px; background: rgba(95, 136, 255, .1); color: #c9d6ff; font-size: 14.5px; }
+.doc-tip::before { content: "Tip  "; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; font-size: 11px; color: var(--blue); }
+@media (max-width: 960px) {
+  .guide-body { grid-template-columns: 1fr; gap: 20px; }
+  .guide-side { position: sticky; top: 70px; z-index: 5; display: flex; gap: 6px; max-height: none; overflow-x: auto; overflow-y: hidden; padding: 10px 0; margin: 0 -24px; padding-inline: 24px; background: rgba(11, 10, 15, .92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--rule); scrollbar-width: none; }
+  .side-grp { display: contents; }
+  .side-grp p { display: none; }
+  .side-grp a { flex: none; margin: 0; padding: 6px 12px; border-radius: 999px; box-shadow: inset 0 0 0 1px var(--rule-2); font-size: 13px; }
+  .side-grp a[aria-current="true"] { box-shadow: inset 0 0 0 1px var(--violet); }
+  .side-grp kbd { display: none; }
+  .doc, .doc-grp-title { scroll-margin-top: 150px; }
+}
+@media (max-width: 560px) {
+  .guide { padding-top: 50px; }
+  .doc { padding: 22px 20px; }
+  .doc-mods div { grid-template-columns: 1fr; gap: 6px; }
+}

@@ -32,6 +32,7 @@ export function Nav({ home = false }: { home?: boolean }) {
           <a href={`${at}#live`}>{t["nav.live"]}</a>
           <a href={`${at}#files`}>{t["nav.files"]}</a>
           <a href={`${at}#godot`}>{t["nav.godot"]}</a>
+          <a href={`${B}/guide/`}>{t["nav.guide"]}</a>
           <a href={`${at}#install`}>{t["nav.help"]}</a>
         </nav>
         <div className="nav-end">
@@ -63,6 +64,7 @@ export function Footer() {
       <span>© Azdhar Syahputra · {t["foot.license"]}</span>
       <span className="foot-links">
         <a href={`${B}/download/`}>{t["nav.download"]}</a>
+        <a href={`${B}/guide/`}>{t["nav.guide"]}</a>
         <a href={REPO}>GitHub</a>
         <a href={`${REPO}/releases`}>Releases</a>
       </span>

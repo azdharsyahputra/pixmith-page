@@ -15,6 +15,7 @@ const DICT = {
     "nav.godot": "Godot",
     "nav.help": "Install",
     "nav.download": "Download",
+    "nav.guide": "Guide",
     dl: {
       title: "Download Pixmith",
       lede: "Pick your system. Every build has the full editor, Live Link and Godot export.",
@@ -105,6 +106,7 @@ const DICT = {
     "nav.godot": "Godot",
     "nav.help": "Install",
     "nav.download": "Download",
+    "nav.guide": "Panduan",
     dl: {
       title: "Download Pixmith",
       lede: "Pilih sistem kamu. Setiap versi punya editor lengkap, Live Link dan export Godot.",
