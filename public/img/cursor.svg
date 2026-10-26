@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 9" width="8" height="9" shape-rendering="crispEdges">
+  <!-- Menu cursor: a white pixel arrow with a dark outline. -->
+  <path fill="#0a0b26" d="M0 0h3v1h1v1h1v1h1v1h1v1h-1v1h-1v1h-1v1h-1v1H0z"/>
+  <path fill="#f4f2ff" d="M1 1h1v1h1v1h1v1h1v1h-1v1h-1v1h-1v1H1z"/>
+</svg>
