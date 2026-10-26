@@ -1,5 +1,5 @@
-# Builds the site (Next.js static export) and publishes it to GitHub Pages. Manual for now: run it from the
-# Actions tab once Pages is enabled (Settings > Pages > Source: GitHub Actions; needs a public repo or GitHub Pro).
+# Builds the site (Next.js static export) and publishes it to GitHub Pages at pixmith.azdhar.me (the custom domain is
+# set in Settings > Pages, so the site is served from the root). Manual for now: run it from the Actions tab.
 name: Website
 
 on:
@@ -29,7 +29,6 @@ jobs:
       - run: npm ci
       - run: npx next build
         env:
-          NEXT_PUBLIC_BASE_PATH: /${{ github.event.repository.name }}
           NEXT_TELEMETRY_DISABLED: 1
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
