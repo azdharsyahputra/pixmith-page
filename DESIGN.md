@@ -1,18 +1,19 @@
 # Design: Pixmith website
 
-Premium editorial on art paper, where the pixels are the artwork. The Pixmith P, built tile by tile, carries the first
-viewport; everything else is set like a print catalogue: serif display, tracked capitals, ink rules, framed prints.
+Dark, like the app icon: near-black ground, the Pixmith P built tile by tile and glowing in the logo ramp. A faint
+pixel grid sits behind the hero and the pointer paints its cells in the ramp colors, which fade like a brush stroke.
+Serif display, tracked capitals, rounded dark cards with a ramp border on hover.
 
 ## Tokens
 
 | Token | Value | Use |
 | --- | --- | --- |
-| `--paper` / `--paper-2` / `--card` | `#f3eee3` / `#ebe4d5` / `#f8f4ec` | Page, wells, cards and frames |
-| `--ink` / `--ink-2` / `--ink-3` | `#18214d` / `#3c4470` / `#6b6f8a` | Type, rules, secondary text |
-| `--rule` | `#d8cfbd` | Hairlines inside cards |
-| `--coral` | `#f05a42` | The accent: third headline line, step rule, arrows, dots, focus |
-| `--night` | `#1a1533` | The Live Link band |
-| Logo ramp | `#a65cf2` → `#5f88ff` → `#dc52a8` → `#ff9445` | Tiles of the P only |
+| `--bg` / `--bg-2` | `#0b0a0f` / `#111017` | Page, ticker and Live Link band |
+| `--card` / `--card-2` | `#15141c` / `#1b1a24` | Cards, strip, frames, icon wells |
+| `--ink` / `--ink-2` / `--ink-3` | `#f5f2ea` / `#bdb8cc` / `#7f7a93` | Type, secondary text, meta |
+| `--rule` / `--rule-2` | white 8% / 16% | Hairlines, outlines |
+| `--coral` | `#ff6a4d` | Accent: arrows, dots, wire, focus |
+| `--ramp` | violet → blue → pink → coral → amber | Third headline line, nav underline, card hover border, button glow |
 
 ## Type
 

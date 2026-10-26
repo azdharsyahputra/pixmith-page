@@ -1,12 +1,37 @@
 "use client";
 
+import { useEffect } from "react";
 import TileMark from "./components/TileMark";
+import HeroField from "./components/HeroField";
 import LiveLinkDemo from "./components/LiveLinkDemo";
 import { OS_NAME, REPO, useDownloads } from "./components/ui";
 import { ITEMS, PixelSprite } from "./sprites";
 import { useLang } from "./i18n";
 
 const B = process.env.NEXT_PUBLIC_BASE_PATH || "";
+
+const TICKER = [".aseprite in, .aseprite out", "Godot 4 SpriteFrames", "Live Link", "Tilemaps", "Isometric grid", "Lua scripts", "Onion skin", "Shading ink", "Indexed palettes", "macOS · Windows · Linux"];
+
+/** Sections fade up as they enter the viewport. Without JS or with reduced motion they are simply there. */
+function useReveal() {
+  useEffect(() => {
+    if (!("IntersectionObserver" in window) || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const els = document.querySelectorAll<HTMLElement>("[data-reveal]");
+    const io = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add("in");
+            io.unobserve(e.target);
+          }
+        }),
+      { rootMargin: "0px 0px -8% 0px" },
+    );
+    els.forEach((el) => io.observe(el));
+    document.documentElement.classList.add("reveal-on");
+    return () => io.disconnect();
+  }, []);
+}
 
 /** A staircase rule under the headline: a line drawn the way a pixel line steps. */
 function StepRule() {
@@ -28,10 +53,12 @@ function Arrow() {
 export default function Home() {
   const { t, lang, setLang } = useLang();
   const dl = useDownloads();
+  useReveal();
   const primary = dl.os ? { label: t.download(OS_NAME[dl.os]), href: dl.urls[dl.os] } : { label: t.downloadAny, href: `${REPO}/releases/latest` };
 
   return (
     <>
+      <div className="nav-bar">
       <header className="nav wrap">
         <a className="brand" href="#top">
           <img src={`${B}/img/logo.png`} alt="" width={44} height={44} />
@@ -61,10 +88,18 @@ export default function Home() {
           </a>
         </div>
       </header>
+      </div>
 
       <main id="top">
+        <div className="hero-band">
+        <HeroField />
         <section className="hero wrap">
           <div className="hero-copy">
+            <a className="eyebrow" href="#live">
+              <span className="pulse" aria-hidden="true" />
+              {t["hero.eyebrow"]}
+              {dl.version ? <b>{dl.version}</b> : null}
+            </a>
             <h1>
               <span>{t["hero.title1"]}</span>
               <span>{t["hero.title2"]}</span>
@@ -83,15 +118,23 @@ export default function Home() {
             </div>
             <p className="hero-meta">
               {t["hero.meta"]}
-              {dl.version ? ` · ${dl.version}` : ""}
             </p>
           </div>
           <div className="hero-art">
             <TileMark />
           </div>
         </section>
+        </div>
 
-        <section className="cards wrap" aria-label="Highlights">
+        <div className="ticker" aria-hidden="true">
+          <div className="ticker-run">
+            {[...TICKER, ...TICKER].map((x, i) => (
+              <span key={i}>{x}</span>
+            ))}
+          </div>
+        </div>
+
+        <section data-reveal className="cards wrap" aria-label="Highlights">
           <a className="card" href="#live">
             <div className="card-text">
               <h2>{t["card.live.h"]}</h2>
@@ -124,7 +167,7 @@ export default function Home() {
           </a>
         </section>
 
-        <section className="strip wrap" aria-label="Features">
+        <section data-reveal className="strip wrap" aria-label="Features">
           {t.strip.map((s, i) => (
             <div key={s.t} className="strip-item">
               <span className="strip-icon">
@@ -139,14 +182,14 @@ export default function Home() {
         </section>
 
         <section id="live" className="live-sec">
-          <div className="wrap">
+          <div className="wrap" data-reveal>
             <h2 className="sec-title">{t["live.title"]}</h2>
             <p className="lede">{t["live.lede"]}</p>
             <LiveLinkDemo />
           </div>
         </section>
 
-        <section className="editor-sec wrap">
+        <section data-reveal className="editor-sec wrap">
           <h2 className="sec-title">{t["editor.title"]}</h2>
           <p className="lede">{t["editor.lede"]}</p>
           <figure className="print">
@@ -162,7 +205,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="install" className="help wrap">
+        <section data-reveal id="install" className="help wrap">
           <div>
             <h2 className="sec-title">{t["help.title"]}</h2>
             <p className="lede">{t["help.lede"]}</p>
@@ -177,7 +220,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="close wrap">
+        <section data-reveal className="close wrap">
           <h2>{t["close.title"]}</h2>
           <StepRule />
           <a className="btn btn-ink" href={primary.href}>

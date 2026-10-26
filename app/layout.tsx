@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   },
 };
 
-export const viewport: Viewport = { themeColor: "#f3eee3" };
+export const viewport: Viewport = { themeColor: "#0b0a0f" };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   const vars = { "--cursor": `url(${B}/img/cursor.svg)` } as CSSProperties;
