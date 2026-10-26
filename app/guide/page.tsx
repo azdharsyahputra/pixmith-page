@@ -6,6 +6,11 @@ import { useLang } from "../i18n";
 import { GUIDE } from "./content";
 import ToolDemo from "./demos";
 
+const B = process.env.NEXT_PUBLIC_BASE_PATH || "";
+
+// Entries with a real app screenshot in public/img/guide/<id>.webp.
+const SHOTS = new Set<string>(["blur", "brush-size", "bucket", "colors", "contour", "curve", "ellipse", "eraser", "export-godot", "eyedropper", "frames", "gradient", "ink", "iso", "jumble", "lasso", "line", "marquee", "move", "onion", "pencil", "pixel-perfect", "polygon", "polylasso", "rectangle", "slice", "spray", "symmetry", "terrain", "text", "tilemap", "transform", "view", "wand"]);
+
 /** A shortcut short enough for a key cap: ⇧⌘G rather than Shift+Cmd+G. */
 const cap = (k: string) => k.replace(/Shift\+/g, "⇧").replace(/Cmd\+/g, "⌘").replace(/Option\+/g, "⌥").replace(/ /g, "");
 
@@ -84,8 +89,15 @@ export default function GuidePage() {
                 </h2>
                 {grp.intro ? <p className="doc-grp-intro">{grp.intro}</p> : null}
                 {grp.items.map((it) => (
-                  <article key={it.id} id={it.id} className="doc">
-                    <ToolDemo id={it.id} />
+                  <article key={it.id} id={it.id} className={SHOTS.has(it.id) ? "doc has-shot" : "doc"}>
+                    {SHOTS.has(it.id) ? (
+                      <figure className="doc-shot">
+                        <img src={`${B}/img/guide/${it.id}.webp`} alt={`${it.name} in Pixmith`} loading="lazy" />
+                        <ToolDemo id={it.id} />
+                      </figure>
+                    ) : (
+                      <ToolDemo id={it.id} />
+                    )}
                     <div className="doc-main">
                     <div className="doc-head">
                       <span className="doc-key" aria-hidden="true">
