@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Footer, Nav, StepRule } from "../components/Chrome";
 import { useLang } from "../i18n";
 import { GUIDE } from "./content";
+import ToolDemo from "./demos";
 
 /** A shortcut short enough for a key cap: ⇧⌘G rather than Shift+Cmd+G. */
 const cap = (k: string) => k.replace(/Shift\+/g, "⇧").replace(/Cmd\+/g, "⌘").replace(/Option\+/g, "⌥").replace(/ /g, "");
@@ -84,6 +85,8 @@ export default function GuidePage() {
                 {grp.intro ? <p className="doc-grp-intro">{grp.intro}</p> : null}
                 {grp.items.map((it) => (
                   <article key={it.id} id={it.id} className="doc">
+                    <ToolDemo id={it.id} />
+                    <div className="doc-main">
                     <div className="doc-head">
                       <span className="doc-key" aria-hidden="true">
                         {it.key ? cap(it.key) : "·"}
@@ -111,6 +114,7 @@ export default function GuidePage() {
                       </dl>
                     ) : null}
                     {it.tip ? <p className="doc-tip">{it.tip}</p> : null}
+                    </div>
                   </article>
                 ))}
               </section>
